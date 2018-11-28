@@ -204,7 +204,6 @@ public class SimpleIO {
 		return i == null ? Integer.MAX_VALUE : i;
 	}
 
-
 	/**
 	 ** returns a float input from the user via a simple dialog.
 	 ** @param prompt the message string to be displayed inside dialog
