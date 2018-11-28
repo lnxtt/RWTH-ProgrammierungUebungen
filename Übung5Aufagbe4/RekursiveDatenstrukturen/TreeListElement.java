@@ -37,6 +37,9 @@ public class TreeListElement{
         this.next = next;
     }
     //b)
+    /**
+     * @return string of the Tree structure
+     */
     public String toString(){
         String result = "";
         if(this.getValue() != null){
@@ -48,6 +51,9 @@ public class TreeListElement{
         return result;
     }
     //c)
+    /**
+     * @return the branchingDegree of this TreeListElement
+     */
     public int branchingDegree(){
         int x = iterration();
         int a;
@@ -70,6 +76,11 @@ public class TreeListElement{
         return this.getNext().branchingDegree() + 1;
     }
     //d)
+    /**
+     * searches for a value in this TreeListElment and all of its following TreeListElements
+     * @param toSearch The value which will be searched
+     * @return if the value was found or not
+     */
     public boolean contains(int toSearch){
         if((this.getValue()!=null && this.getValue().contains(toSearch))||(this.getNext()!=null && this.getNext().contains(toSearch))){
             return true;
@@ -77,6 +88,9 @@ public class TreeListElement{
         return false;
     }
     //e)
+    /**
+     * @param children all trees of this TreeListElement, which	should be added
+     */
     public static TreeListElement buildTree(Tree...children) {
         TreeListElement treelistelement = null;
         if (children.length == 1) {
