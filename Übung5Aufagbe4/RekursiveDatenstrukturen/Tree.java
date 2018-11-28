@@ -10,6 +10,7 @@ public class Tree
     }
 
     //a)
+
     public int getLabel(){
         return label; 
     }
@@ -26,7 +27,9 @@ public class Tree
         this.children = children;
     }
     //b)
-
+    /**
+     * @return string of the tree structure
+     */
     public String toString(){
         String result = this.getLabel() + "->[";
         if(this.getChildren() != null){
@@ -36,7 +39,9 @@ public class Tree
     }
 
     //c)
-
+    /**
+     * @return the branchingDegree of this Tree
+     */
     public int branchingDegree(){
         if(this.getChildren().getHead()==null){
             return 0;
@@ -45,7 +50,11 @@ public class Tree
     }
 
     //d)
-
+    /**
+     * search for a value in this Tree
+     * @param toSearch is the value which will be searched
+     * @return if the value was found or not
+     */
     public boolean contains(int toSearch){
         if(this.getLabel() == toSearch ||(this.getChildren() != null && this.getChildren().contains(toSearch) )){
             return true;
@@ -54,7 +63,12 @@ public class Tree
     }
 
     //e)
-
+    /**
+     * creates a new Tree
+     * @param value The value for the label of the new Tree
+     * @param children The childrenTrees of the new Tree
+     * @return The new Tree
+     */
     public static Tree buildTree(int value, Tree... children){
         TreeList treelist;
         if (children.length == 0) return new Tree(value, new TreeList());
