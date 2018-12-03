@@ -1,11 +1,9 @@
-public class Entry{
+public abstract class Entry<T>{
 
-    String name;
-    Node node;
+    private String name;
 
-    public Entry(String name; Node node){
+    public Entry(String name){
         this.name = name;
-        this.node = node;
     }
 
     public String getName() {
@@ -13,17 +11,12 @@ public class Entry{
     }
 
     public File getAsFile(){
-        //TODO Überprüfen,ob der Entry wirklich ein File ist und falls ja als File zurückgeben
-        return null;
+        return this instanceof File ? (File)this : null;
     }
 
     public Directory getAsDirectory(){
-        //TODO Überprüfen,ob der Entry ein Directory ist und falls ja als Directory zurückgeben
-        return null;
+        return this instanceof Directory ? (Directory)this : null;
     }
 
-    public Entry createHardlink(String newName){
-        //TODO Soll einen neuen HardLink erstellen, der auf das gleiche node wie dieser Entry verweist
-        return null;
-    }
+    public abstract Entry createHardlink(String newName);
 }
