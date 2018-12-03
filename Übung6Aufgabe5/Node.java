@@ -1,5 +1,5 @@
-public abstract class Node{
-
+public abstract class Node<T>{
+    T content;  
     long lastModified;
 
     public Node(){
