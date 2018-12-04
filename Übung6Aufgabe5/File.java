@@ -1,34 +1,37 @@
-public final class File extends Entry<String>{
-    private FileNode node;
+/**
+ * 
+ * Die Klasse stellt eine Datei dar
+ *
+ */
+public class File extends Node{
 
-    public String readContent()
-    {
-        return node.readContent();
+	/**
+	 * Der Inhalt der Datei
+	 */
+    private String content;
+
+    /**
+     * Erstellt eine neue Datei, mit gegebenem Inhalt
+     * @param content Inhalt der Datei
+     */
+    public File(String content){
+        writeContent(content);
     }
 
-    public void writeContent(String content)
-    {
-        node.writeContent(content);
+    /**
+     * Überschreibt den Inhalt der Datei und aktualisiert das Datum der letzten Bearbeitung
+     * @param content Der neue Inhalt der Datei
+     */
+    public void writeContent(String content){
+        this.content = content;
+        this.touch();
     }
 
-    public File(String name)
-    {
-        this(name, new FileNode());
-    }
-
-    private File(String name, FileNode node)
-    {
-        super(name);
-        node = node;
-    }
-
-    public String getName()
-    {
-        return super.getName();
-    }
-
-    public Entry createHardlink(String name)
-    {
-        return new File(name, node);
+    /**
+     * Liest den Inhalt der Datei
+     * @return Inhalt der Datei
+     */
+    public String readContent() {
+        return content;
     }
 }
