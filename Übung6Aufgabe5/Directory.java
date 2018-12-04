@@ -1,13 +1,13 @@
 /**
- * 
+ *
  * Die Klasse represaentiert den Ordner eines Ordnersystems
  *
  */
 public class Directory extends Node
 {
-	/**
-	 * Die Eintraege eines Ordners
-	 */
+    /**
+     * Die Eintraege eines Ordners
+     */
     private Entry[] entries;
 
     /**
@@ -16,7 +16,7 @@ public class Directory extends Node
      */
     public Directory(Entry... newEntries){
         for (Entry entry : newEntries){
-                addEntry(entry);
+            addEntry(entry);
         }
     }
 
@@ -35,39 +35,26 @@ public class Directory extends Node
      */
     public boolean containsEntry(String name)
     {
-    	if (entries == null)
-    	{
-    		return false;
-    	}
-        for(int i = 0;i < entries.length;i++)
-        {
-        	if(entries[i] == null)
-        	{
-        		continue;
-        	}
-            if(entries[i].getName() == name)
-            {
-                return true;
-            }
-        }
-        return false;
+        return getEntry(name) != null;
     }
 
     /**
      * Liefert den Eintrag des Ordners mit dem angegebenem Namen
      * null, falls nicht vorhanden
-     * @param name Name des gewünschten Eintrags
-     * @return Eintrag im Ordner mit gewünschtem Namen
+     * @param name Name des gewÃ¼nschten Eintrags
+     * @return Eintrag im Ordner mit gewÃ¼nschtem Namen
      */
     public Entry getEntry(String name)
     {
-        for(int i = 0;i < entries.length;i++)
-        {
-            if(entries[i].getName() == name)
+    	if(entries != null){
+            for(int i = 0;i < entries.length;i++)
             {
-                return entries[i];
+            	if(entries[i].getName() == name)
+            	{
+            	    return entries[i];
+            	}
             }
-        }
+	}
         return null;
     }
 
@@ -79,17 +66,13 @@ public class Directory extends Node
      */
     public Entry createDirectory(String name)
     {
-        if(containsEntry(name) == false)
-        {
-        	Entry newDirec = new Entry(name, new Directory());
-        	this.addEntry(newDirec);
-        	return newDirec;
-        }
-        else
-        {
+        if(containsEntry(name)){
             System.out.println("Error : the directory : " + name + " already exist.");
+            return null;
         }
-        return null;
+        Entry newDirec = new Entry(name, new Directory());
+        this.addEntry(newDirec);
+        return newDirec;
     }
 
     /**
@@ -101,16 +84,13 @@ public class Directory extends Node
      */
     public Entry createFile(String name, String content)
     {
-        if(containsEntry(name) == false)
-        {
-        	Entry newFile = new Entry(name, new File(content));
-        	this.addEntry(newFile);
-        	return newFile;
-        }
-        else{
+        if(containsEntry(name)){
             System.out.println("Error : the file : " + name + " already exist.");
+            return null;
         }
-        return null;
+        Entry newFile = new Entry(name, new File(content));
+        this.addEntry(newFile);
+        return newFile;
     }
 
     /**
@@ -121,38 +101,12 @@ public class Directory extends Node
      */
     public Entry createHardlink(String name, Entry entry)
     {
-        if(containsEntry(name) == false)
-        {
-        	Entry newEntry = entry.createHardlink(name);
-        	return newEntry;
-        	/*
-        	if (entry.getAsDirectory() != null)
-        	{
-        		Entry newEntry = new Entry (name, entry.getAsDirectory());
-                this.addEntry(newEntry);
-                return newEntry;
-        	}
-        	else if (entry.getAsFile() != null)
-        	{
-        		Entry newEntry = new Entry (name, entry.getAsFile());
-                this.addEntry(newEntry);
-                return newEntry;
-        	}
-        	else
-        	{
-        		//Nicht sicher, ob alle Fälle tatsächlich abgedeckt sind
-        		Entry newEntry = new Entry (name, null);
-                this.addEntry(newEntry);
-                return newEntry;
-        	}
-        	*/
-            
-        }
-        else
-        {
+        if(containsEntry(name) == false){
             System.out.println("Error : the Hardlink : " + name + " already exist.");
+            return null;
         }
-        return null;
+        Entry newEntry = entry.createHardlink(name);
+        return newEntry;
     }
 
     /**
@@ -162,30 +116,30 @@ public class Directory extends Node
      */
     private void addEntry(Entry newEntry)
     {
-    	Entry[] newEntries = new Entry[1];
-    	if (entries == null)
-    	{
-    		entries = newEntries;
-    		entries[0] = newEntry;
-    		this.touch();
-    	}
-    	else
-    	{
-    		newEntries = new Entry[entries.length+1];
-    		if (entries.length > 0)
-    		{
-    			for(int i = 0;i < entries.length;i++)
-    			{
-    				newEntries[i] = entries[i];
-    			}
-    		}
-    	
-    		newEntries[entries.length] = newEntry;
-    		this.entries = newEntries;
-    		this.touch();
-    	}
+        Entry[] newEntries = new Entry[1];
+        if (entries == null)
+        {
+            entries = newEntries;
+            entries[0] = newEntry;
+            this.touch();
+        }
+        else
+        {
+            newEntries = new Entry[entries.length+1];
+            if (entries.length > 0)
+            {
+                for(int i = 0;i < entries.length;i++)
+                {
+                    newEntries[i] = entries[i];
+                }
+            }
+
+            newEntries[entries.length] = newEntry;
+            this.entries = newEntries;
+            this.touch();
+        }
     }
-    
+
     /**
      * Erstellt einen leeren Ordner
      * Mit einem Array der Laenge 0
@@ -193,9 +147,9 @@ public class Directory extends Node
      */
     public static Directory createEmpty()
     {
-    	return new Directory();
+        return new Directory();
     }
-    
+
     /**
      * Schreibt das Ordnersystem in die Konsole
      * @param name Name des Ordners, an dessen Unterordner und Dateien ausgegeben werden
@@ -203,28 +157,27 @@ public class Directory extends Node
      */
     public void accept(String name, Visitor visitor)
     {
-    	if (entries != null)
-    	{
+        if (entries != null)
+        {
 
-        	visitor.visitDirectory(name, this);
-        	for ( int i = 0; i < entries.length; i++)
-        	{
-        		if(entries[i] != null)
-        		{
-        			if(entries[i].getAsFile() != null)
-        			{
-        				visitor.visitFile(entries[i].getName(), entries[i].getAsFile());
-        			}
-        			else if (entries[i].getAsDirectory() != null)
-        			{
-        				entries[i].getAsDirectory().accept(entries[i].getName(), visitor);
-        				visitor.reset();
-        			}
-        		}
-        	}
-    	}
-    	
-    	
-    	visitor.visitedDirectory();
+            visitor.visitDirectory(name, this);
+            for ( int i = 0; i < entries.length; i++)
+            {
+                if(entries[i] != null)
+                {
+                    if(entries[i].getAsFile() != null)
+                    {
+                        visitor.visitFile(entries[i].getName(), entries[i].getAsFile());
+                    }
+                    else if (entries[i].getAsDirectory() != null)
+                    {
+                        entries[i].getAsDirectory().accept(entries[i].getName(), visitor);
+                        visitor.reset();
+                    }
+                }
+            }
+        }
+
+        visitor.visitedDirectory();
     }
 }
