@@ -22,23 +22,13 @@ public abstract class Swallow {
     protected int calculateAirspeed(int airspeed, Object cargo) {
         if (cargo != null) {
             if (cargo instanceof Nut) {
-                if (airspeed - ((Nut) cargo).getWeight() =<0){
-                    return 0;
-                }
-			    else{
-                    return (airspeed - ((Nut) cargo).getWeight());
-                }
+                int speed = airspeed-((Nut)cargo).getWeight();
+                if (speed<0) {return 0;}
+                return speed;
             }
-            else {
-                if (airspeed > 0) {
-                    return airspeed / 2;
-                }
-                else{
-                    return 0;
-                }
-            }
+            return airspeed/2;
+
         }
         return airspeed;
     }
-
 }
