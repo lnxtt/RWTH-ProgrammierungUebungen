@@ -1,3 +1,0 @@
-module cargo{
-	exports cargo;
-}
