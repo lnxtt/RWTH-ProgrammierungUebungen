@@ -24,9 +24,9 @@ multList (x:xs) (y:xy) = ((x * y): multList xs xy)
 
 binRep :: Int -> (Int,[Int])
 binRep a
-     | a < 0 = (1, getBinaryNumber ((-1)*a))
+     | a < 0 = (-1, getBinaryNumber ((-1)*a))
      | a == 0 = (0, getBinaryNumber a)
-     | otherwise = (0, getBinaryNumber a)
+     | otherwise = (1, getBinaryNumber a)
 
 getBinaryNumber :: Int -> [Int]
 getBinaryNumber a | a < 2 = [a]
