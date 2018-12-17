@@ -1,6 +1,5 @@
 fib :: Int -> Int
-fib 0 = 0
-fib 1 = 1
+fib  a | a < 2 = a
 fib n = fib (n-1) + fib (n-2)
 
 pow :: Int -> Int -> Int
@@ -22,3 +21,17 @@ multList :: [Int] -> [Int] -> [Int]
 multList _ [] = []
 multList [] _ = []
 multList (x:xs) (y:xy) = ((x * y): multList xs xy)
+
+binRep :: Int -> (Int,[Int])
+binRep a
+     | a < 0 = (1, getBinaryNumber ((-1)*a))
+     | otherwise = (0, getBinaryNumber a)
+
+getBinaryNumber :: Int -> [Int]
+getBinaryNumber a | a < 2 = [a]
+getBinaryNumber a
+              | getModWithTwo a == 0 = getBinaryNumber (div a 2) ++ [0]
+              | otherwise = getBinaryNumber (div a 2) ++ [1]
+
+getModWithTwo :: Int -> Int
+getModWithTwo a = a - (2*(div a 2))
