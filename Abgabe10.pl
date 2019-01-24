@@ -54,5 +54,6 @@ flatten([[X|Y]|Z], [A|R]):- X==A, flatten([Y|Z],R).
 appendElement([],Y,Z):- [Y]==Z.
 appendElement([X|R],Y,[Z|A]):- X==Z,appendElement(R,Y,A).
 
-reverseList([X|[]], [Y|[]]):- X==Y.
-reverseList([X|R], [A|[Y|[]]]):- X==Y,reverseList(R,A).
+reverseList(Xs, Ys) :- reverseList(Xs, [], Ys, Ys).
+reverseList([], Ys, Ys, []).
+reverseList([X|Xs], Rs, Ys, [_|Bound]) :- reverseList(Xs, [X|Rs], Ys, Bound).
